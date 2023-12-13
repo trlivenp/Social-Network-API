@@ -1,33 +1,18 @@
-// app/controllers/userController.js
-const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
-exports.registerUser = async (req, res) => {
-  const { username, password } = req.body;
-
-  const hashedPassword = await bcrypt.hash(password, 10);
+exports.retrieveUserFriends = async (req, res) => {
+  const { userId } = req.params;
 
   try {
-    const newUser = new User({ username, password: hashedPassword });
-    await newUser.save();
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
+    const user = await User.findById(userId).populate('friends', 'username');
 
-exports.loginUser = async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const user = await User.findOne({ username });
-
-    if (user && (await bcrypt.compare(password, user.password))) {
-      res.status(200).json({ message: 'Login successful' });
-    } else {
-      res.status(401).json({ message: 'Invalid credentials' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
+
+    res.status(200).json({ friends: user.friends });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

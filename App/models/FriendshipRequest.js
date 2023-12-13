@@ -1,4 +1,3 @@
-// app/models/FriendshipRequest.js
 const mongoose = require('mongoose');
 
 const friendshipRequestSchema = new mongoose.Schema({

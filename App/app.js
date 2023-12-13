@@ -9,7 +9,7 @@ const postRoutes = require('./routes/postRoutes');
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/social_network', {
+mongoose.connect('mongodb://localhost:27017', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,

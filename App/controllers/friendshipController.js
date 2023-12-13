@@ -1,4 +1,3 @@
-// app/controllers/friendshipController.js
 const User = require('../models/User');
 const FriendshipRequest = require('../models/FriendshipRequest');
 
